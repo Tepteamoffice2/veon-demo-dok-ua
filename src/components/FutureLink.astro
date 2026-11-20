@@ -1,0 +1,20 @@
+---
+// A future page or function that is not built in the demo yet (menu item, button, card, footer link).
+// Renders an inactive element with a short note instead of a link: never points to the client's current site.
+// `as="button"` — for actions (search, «Знайти запчастини»); default — an inactive link.
+interface Props { note?: string; class?: string; as?: "link" | "button"; up?: boolean; rec?: string; }
+const { note = "Розділ у розробці", class: cls, as = "link", up = false, rec } = Astro.props;
+---
+{as === "button" ? (
+  <button type="button" class:list={["future-link", { "future-link--up": up }, cls]} aria-disabled="true" data-rec={rec}>
+    <slot />
+    <span class="future-link__note" aria-hidden="true">{note}</span>
+    <span class="visually-hidden">({note})</span>
+  </button>
+) : (
+  <span class:list={["future-link", { "future-link--up": up }, cls]} role="link" aria-disabled="true" tabindex="0" data-rec={rec}>
+    <slot />
+    <span class="future-link__note" aria-hidden="true">{note}</span>
+    <span class="visually-hidden">({note})</span>
+  </span>
+)}

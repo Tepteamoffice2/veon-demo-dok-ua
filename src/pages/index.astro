@@ -1,0 +1,71 @@
+---
+// dok.ua — homepage (design/concept.md § 8; blocks and ids from the veon-concept list).
+import Base from "../layouts/Base.astro";
+import Header from "../components/Header.astro";
+import Hero from "../components/Hero.astro";
+import BottomBar from "../components/BottomBar.astro";
+import VinExpert from "../components/VinExpert.astro";
+import Catalog from "../components/Catalog.astro";
+import Brands from "../components/Brands.astro";
+import Guarantees from "../components/Guarantees.astro";
+import Delivery from "../components/Delivery.astro";
+import AppGarage from "../components/AppGarage.astro";
+import Contacts from "../components/Contacts.astro";
+import Footer from "../components/Footer.astro";
+import { email, phoneMain, phonesOther, socials } from "../data/site";
+
+const title = "Автозапчастини для іномарок з підбором за VIN | dok.ua";
+const description = "15 млн товарів для іномарок. Підбір за держномером, VIN або маркою, експерт на лінії 0 800 330 707. Доставка по Україні, повернення до 365 днів.";
+// JSON-LD Organization (R-102): only facts from client.json; no url/logo — the demo never points to the current site
+const org = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  name: "DOK.ua",
+  slogan: "Автозапчастини без сумнівів",
+  foundingDate: "2011",
+  email: email.label,
+  telephone: [phoneMain.label, ...phonesOther.map((p) => p.label)],
+  address: { "@type": "PostalAddress", addressLocality: "Київ", streetAddress: "вул. Перемоги, 9-а", addressCountry: "UA" },
+  sameAs: socials.map((s) => s.href),
+};
+---
+<Base lang="uk" title={title} description={description}>
+  <script slot="head" type="application/ld+json" is:inline set:html={JSON.stringify(org)} data-rec="R-102" />
+  <Header slot="header" />
+  <Hero />
+  <VinExpert />
+  <Catalog />
+  <Brands />
+  <Guarantees />
+  <Delivery />
+  <AppGarage />
+  <Contacts />
+  <Fragment slot="footer"><Footer /><BottomBar /></Fragment>
+</Base>
+
+<script>
+  import { initCar } from "../scripts/car";
+  initCar();
+  // FutureLink: keep the note inside the screen; on touch and click keep it visible for a moment
+  const place = (el: HTMLElement) => {
+    const note = el.querySelector<HTMLElement>(".future-link__note");
+    if (!note) return;
+    el.style.setProperty("--nx", "0px");
+    const r = note.getBoundingClientRect();
+    const vw = document.documentElement.clientWidth;
+    const shift = r.left < 8 ? 8 - r.left : r.right > vw - 8 ? vw - 8 - r.right : 0;
+    el.style.setProperty("--nx", `${Math.round(shift)}px`);
+  };
+  document.querySelectorAll<HTMLElement>(".future-link").forEach((el) => {
+    let t = 0;
+    el.addEventListener("pointerenter", () => place(el));
+    el.addEventListener("focus", () => place(el));
+    el.addEventListener("click", (e) => {
+      e.preventDefault();
+      place(el);
+      el.classList.add("is-noted");
+      window.clearTimeout(t);
+      t = window.setTimeout(() => el.classList.remove("is-noted"), 2600);
+    });
+  });
+</script>

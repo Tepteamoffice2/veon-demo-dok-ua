@@ -1,0 +1,66 @@
+---
+// «Стелаж»: 9 груп каталогу клітинками сітки, розділеними лініями; у кожній — популярні запчастини. Усе — FutureLink.
+import FutureLink from "./FutureLink.astro";
+import { catalog } from "../data/site";
+---
+<section id="catalog" class="section cat" data-rec="R-007,R-010" aria-labelledby="cat-title">
+  <div class="container">
+    <div class="cat__head">
+      <h2 id="cat-title">Каталог: 9 груп запчастин</h2>
+      <p class="section__lead">15 млн товарів і понад 1,9 тис. брендів. Почніть із групи або з популярної запчастини.</p>
+    </div>
+    <ul class="shelf">
+      {catalog.map((c, i) => (
+        <li class="shelf__cell">
+          <h3 class="shelf__group"><FutureLink class="shelf__group-link">{c.group}</FutureLink></h3>
+          <button class="shelf__toggle" type="button" aria-expanded="false" aria-controls={`parts-${i}`} data-shelf-toggle>Популярні ({c.parts.length})</button>
+          <ul class="shelf__parts" id={`parts-${i}`}>
+            {c.parts.map((p) => <li><FutureLink class="shelf__part">{p}</FutureLink></li>)}
+          </ul>
+        </li>
+      ))}
+    </ul>
+    <div class="cat__all">
+      <FutureLink as="button" class="btn btn--ghost" note="Розділ у розробці">Усі категорії</FutureLink>
+    </div>
+  </div>
+</section>
+
+<style>
+  .cat { padding-top: var(--s-6); }
+  .cat__head { display: grid; gap: var(--s-4); margin-bottom: var(--s-6); }
+  .cat__head .section__lead { max-width: 34rem; }
+  .shelf { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); border-top: var(--rule-w) solid var(--color-text); }
+  .shelf__cell { display: grid; align-content: start; gap: var(--s-3); padding: var(--s-4) var(--s-3) var(--s-5) 0; border-bottom: var(--rule-w) solid var(--color-rule); min-width: 0; }
+  .shelf__cell:nth-child(2n) { padding-left: var(--s-3); border-left: var(--rule-w) solid var(--color-rule); }
+  .shelf__group { font-size: 1.0625rem; line-height: 1.25; }
+  .shelf__group :global(.shelf__group-link) { display: inline-flex; align-items: center; min-height: var(--tap); color: var(--color-text); border-radius: 2px; transition: color var(--dur-mid) var(--ease-out); }
+  .shelf__group :global(.shelf__group-link:hover) { color: var(--color-brand-ink); text-decoration: underline; text-underline-offset: .2em; }
+  .shelf__parts { display: grid; gap: 0; }
+  .shelf__parts :global(.shelf__part) { display: flex; align-items: center; min-height: var(--tap); font-size: var(--fs-small); color: var(--color-text-muted); transition: color var(--dur-mid) var(--ease-out); }
+  .shelf__parts :global(.shelf__part:hover) { color: var(--color-brand-ink); text-decoration: underline; text-underline-offset: .2em; }
+  .cat__all { margin-top: var(--s-6); }
+  .shelf__toggle { display: none; }
+  @media (max-width: 767px) {
+    :global(.js) .shelf__toggle { display: inline-flex; align-items: center; gap: var(--s-2); justify-self: start; min-height: var(--tap); padding: 0; border: 0; text-align: left; background: var(--color-clear); color: var(--color-brand-ink); font-size: var(--fs-small); font-weight: 700; cursor: pointer; text-decoration: underline; text-underline-offset: .2em; }
+    :global(.js) .shelf__toggle[aria-expanded="true"] { color: var(--color-text); }
+    :global(.js) .shelf__parts { display: none; }
+    :global(.js) .shelf__toggle[aria-expanded="true"] + .shelf__parts { display: grid; animation: fade 180ms var(--ease-out); }
+    .shelf__cell { gap: var(--s-1); }
+  }
+  @keyframes fade { from { opacity: 0; } }
+  @media (min-width: 768px) {
+    .cat__head { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-items: end; column-gap: var(--s-6); }
+    .shelf { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .shelf__cell, .shelf__cell:nth-child(2n) { padding: var(--s-5) var(--s-5) var(--s-6); border-left: var(--rule-w) solid var(--color-rule); }
+    .shelf__cell:nth-child(3n + 1) { padding-left: 0; border-left: 0; }
+    .shelf__group { font-size: var(--fs-h3); }
+    .shelf__parts :global(.shelf__part) { font-size: var(--fs-body); min-height: 36px; }
+  }
+</style>
+
+<script>
+  document.querySelectorAll<HTMLButtonElement>("[data-shelf-toggle]").forEach((b) => {
+    b.addEventListener("click", () => b.setAttribute("aria-expanded", String(b.getAttribute("aria-expanded") !== "true")));
+  });
+</script>

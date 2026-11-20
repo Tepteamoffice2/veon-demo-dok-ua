@@ -1,0 +1,54 @@
+---
+// «Розмова» з експертом: що підготувати → що отримаєте → телефон. Heading repeats the visitor's car (signature).
+import { email, phoneMain } from "../data/site";
+---
+<section id="vin-expert" class="section ve" data-rec="R-002" aria-labelledby="ve-title">
+  <div class="container ve__grid">
+    <div class="ve__head">
+      <h2 id="ve-title">
+        <span data-car-hide>Не знаєте точну деталь? Підберемо за&nbsp;VIN</span>
+        <span data-car-show hidden>Для <span class="mono ve__car" data-car-text></span> деталь підбере експерт за&nbsp;VIN</span>
+      </h2>
+      <p class="section__lead">Автоексперт dok.ua підбирає запчастини за VIN-кодом або держномером, щоб вони підійшли саме до вашого авто.</p>
+    </div>
+
+    <div class="ve__say">
+      <h3>Що підготувати</h3>
+      <p>VIN-код із 17 знаків. Він записаний у свідоцтві про реєстрацію авто. Немає під рукою — назвіть держномер.</p>
+    </div>
+    <div class="ve__say">
+      <h3>Що отримаєте</h3>
+      <p>Запчастини, сумісні з вашою модифікацією. У базі підбору — понад 38&nbsp;тис. модифікацій авто.</p>
+    </div>
+
+    <div class="ve__call">
+      <p class="ve__call-label">Безкоштовна лінія</p>
+      <a class="ve__phone mono" href={phoneMain.href}>{phoneMain.label}</a>
+      <p class="ve__mail">Або напишіть: <a class="link" href={email.href}>{email.label}</a></p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .ve__grid { display: grid; gap: var(--s-6); }
+  .ve__head { display: grid; gap: var(--s-4); max-width: 46rem; }
+  .ve__car { font-size: 0.86em; letter-spacing: 0; white-space: nowrap; }
+  .ve__say { display: grid; gap: var(--s-3); align-content: start; padding-top: var(--s-4); border-top: var(--rule-w) solid var(--color-rule); }
+  .ve__say p { color: var(--color-text-muted); max-width: 30rem; }
+  .ve__call { display: grid; gap: var(--s-2); align-content: start; padding-top: var(--s-4); border-top: 2px solid var(--color-brand); }
+  .ve__call-label { color: var(--color-text-muted); font-size: var(--fs-small); }
+  .ve__phone { justify-self: start; font-size: clamp(1.75rem, 1rem + 1.6vw, 2.75rem); line-height: 1.1; white-space: nowrap; color: var(--color-brand-ink); text-decoration: none; border-radius: var(--radius); transition: color var(--dur-mid) var(--ease-out); }
+  .ve__phone:hover { color: var(--color-text); text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: .18em; }
+  .ve__mail { color: var(--color-text-muted); }
+  @media (min-width: 768px) {
+    .ve__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: var(--s-6); }
+    .ve__head, .ve__call { grid-column: 1 / -1; }
+  }
+  @media (min-width: 1024px) {
+    .ve__grid { grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gutter); row-gap: var(--s-7); }
+    .ve__head { grid-column: 1 / span 8; }
+    .ve__say:nth-of-type(2) { grid-column: 1 / span 4; }
+    .ve__say:nth-of-type(3) { grid-column: 5 / span 4; }
+    .ve__call { grid-column: 9 / span 4; }
+  }
+</style>

@@ -1,0 +1,38 @@
+---
+// 24 марки — крупний набір «рядком» (не 24 рядки), під ним — 4 популярні моделі. Усе — FutureLink.
+import FutureLink from "./FutureLink.astro";
+import { brands, models } from "../data/site";
+---
+<section id="brands" class="section brands" data-rec="R-007" aria-labelledby="brands-title">
+  <div class="container">
+    <h2 id="brands-title" class="brands__title">Запчастини для 24 популярних марок</h2>
+    <ul class="brands__set">
+      {brands.map((b) => <li><FutureLink class="brands__item">{b}</FutureLink></li>)}
+      <li><FutureLink class="brands__item brands__item--more">Інші марки</FutureLink></li>
+    </ul>
+    <div class="models">
+      <h3 class="models__title">Популярні моделі</h3>
+      <ul class="models__list">
+        {models.map((m) => <li><FutureLink class="models__item">{m}</FutureLink></li>)}
+      </ul>
+    </div>
+  </div>
+</section>
+
+<style>
+  .brands { padding-top: var(--s-5); }
+  .brands__title { margin-bottom: var(--s-5); }
+  .brands__set { display: flex; flex-wrap: wrap; column-gap: 0.55em; row-gap: 0; font-family: var(--font-display); font-weight: 700; font-size: clamp(1.5rem, 1.05rem + 1.9vw, 2.4375rem); line-height: 1.25; letter-spacing: -0.02em; }
+  .brands__set :global(.brands__item) { color: var(--color-text); min-height: var(--tap); border-radius: 2px; transition: color var(--dur-mid) var(--ease-out); }
+  .brands__set :global(.brands__item:hover) { color: var(--color-brand-ink); text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: .15em; }
+  .brands__set :global(.brands__item--more) { color: var(--color-text-muted); font-family: var(--font-body); font-size: var(--fs-lead); font-weight: 400; letter-spacing: 0; }
+  .models { display: grid; gap: var(--s-3); margin-top: var(--s-6); padding-top: var(--s-4); border-top: var(--rule-w) solid var(--color-rule); }
+  .models__title { font-family: var(--font-body); font-size: var(--fs-body); font-weight: 400; color: var(--color-text-muted); letter-spacing: 0; }
+  .models__list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--s-2) var(--s-4); }
+  .models__list :global(.models__item) { min-height: var(--tap); font-size: var(--fs-lead); font-weight: 700; color: var(--color-text); transition: color var(--dur-mid) var(--ease-out); }
+  .models__list :global(.models__item:hover) { color: var(--color-brand-ink); text-decoration: underline; text-underline-offset: .2em; }
+  @media (min-width: 768px) {
+    .models { grid-template-columns: 12rem minmax(0, 1fr); align-items: center; }
+    .models__list { grid-template-columns: repeat(4, minmax(0, auto)); justify-content: start; column-gap: var(--s-6); }
+  }
+</style>

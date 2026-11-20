@@ -1,0 +1,51 @@
+---
+// «Гараж»: HTML-картка збереженого авто — повторює номер, введений у першому екрані, або «Додайте авто». Apps: C-109, C-110.
+import { apps } from "../data/site";
+---
+<section id="app" class="section app" aria-labelledby="app-title">
+  <div class="container app__grid">
+    <div class="app__text">
+      <h2 id="app-title">Гараж dok.ua: ваше авто в застосунку</h2>
+      <p class="section__lead">Збережіть авто в «Гаражі» на сайті або в застосунку dok.ua для iOS та Android, щоб підбирати запчастини саме до нього.</p>
+      <ul class="stores">
+        <li><a class="store" href={apps.ios} rel="noopener"><span class="store__name">App Store</span><span class="store__sub">застосунок для iOS</span></a></li>
+        <li><a class="store" href={apps.android} rel="noopener"><span class="store__name">Google Play</span><span class="store__sub">застосунок для Android</span></a></li>
+      </ul>
+    </div>
+
+    <figure class="garage" aria-label="Картка «Гараж»">
+      <figcaption class="garage__top">Мій гараж</figcaption>
+      <p class="garage__plate">
+        <span class="garage__ua" aria-hidden="true">UA</span>
+        <span class="mono garage__num" data-car-text data-empty="Додайте авто">Додайте авто</span>
+      </p>
+      <p class="garage__hint muted">Підбір починається з вашого авто.</p>
+      <a class="garage__act" href="#hero" data-car-edit><span data-car-hide>Додати авто</span><span data-car-show hidden>Змінити авто</span></a>
+    </figure>
+  </div>
+</section>
+
+<style>
+  .app__grid { display: grid; gap: var(--s-6); align-items: center; }
+  .app__text { display: grid; gap: var(--s-4); }
+  .stores { display: flex; flex-wrap: wrap; gap: var(--s-3); margin-top: var(--s-3); }
+  .store { display: grid; gap: 2px; min-width: 11rem; min-height: 56px; align-content: center; padding: var(--s-2) var(--s-5); border-radius: var(--radius); background: var(--color-text); color: var(--color-bg); text-decoration: none; transition: background-color var(--dur-mid) var(--ease-out), transform var(--dur-fast) var(--ease-out); }
+  .store:hover { background: var(--color-brand-ink); }
+  .store:active { transform: scale(.98); }
+  .store__name { font-weight: 700; font-size: 1.125rem; line-height: 1.1; }
+  .store__sub { font-size: 0.75rem; line-height: 1.2; color: var(--color-bg-2); }
+
+  .garage { margin: 0; display: grid; gap: var(--s-4); padding: var(--s-5); border-radius: var(--radius-card); background: var(--color-surface); border: var(--rule-w) solid var(--color-rule); max-width: 28rem; width: 100%; justify-self: center; }
+  .garage__top { display: flex; justify-content: space-between; font-weight: 700; }
+  .garage__plate { display: flex; align-items: stretch; min-height: 64px; margin: 0; border-radius: var(--radius-plate); outline: 2px solid var(--color-text); outline-offset: -2px; overflow: hidden; }
+  .garage__ua { display: grid; place-items: center; width: 40px; flex: none; background: var(--color-brand); color: var(--color-on-brand); font-size: 0.8125rem; font-weight: 700; }
+  .garage__num { flex: 1; display: grid; place-items: center; padding: 0 var(--s-3); font-size: var(--fs-plate); text-align: center; }
+  .garage__num.is-empty { font-family: var(--font-body); font-weight: 400; font-size: var(--fs-body); color: var(--color-text-muted); }
+  .garage__act { justify-self: start; display: inline-flex; align-items: center; min-height: var(--tap); color: var(--color-brand-ink); font-weight: 700; text-decoration: underline; text-underline-offset: .2em; }
+  .garage__act:hover { color: var(--color-text); }
+  @media (min-width: 1024px) {
+    .app__grid { grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gutter); }
+    .app__text { grid-column: 1 / span 6; }
+    .garage { grid-column: 8 / span 5; justify-self: stretch; padding: var(--s-6); }
+  }
+</style>

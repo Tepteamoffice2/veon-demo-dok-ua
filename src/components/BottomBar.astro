@@ -1,0 +1,29 @@
+---
+// Mobile bottom bar (< 1024): Дзвінок · Підбір · Каталог · Контакти (ux/demo-home.md § 6). No cart in the demo.
+import Icon from "./Icon.astro";
+import { phoneMain } from "../data/site";
+const items = [
+  { href: phoneMain.href, label: "Дзвінок", icon: "phone", aria: `Подзвонити ${phoneMain.label}` },
+  { href: "#hero", label: "Підбір", icon: "target" },
+  { href: "#catalog", label: "Каталог", icon: "grid" },
+  { href: "#contacts", label: "Контакти", icon: "pin" },
+] as const;
+---
+<nav class="bar" aria-label="Швидкі дії" data-rec="R-007">
+  <ul class="bar__list">
+    {items.map((it) => (
+      <li><a class:list={["bar__item", { "bar__item--call": it.icon === "phone" }]} href={it.href} aria-label={"aria" in it ? it.aria : undefined}><Icon name={it.icon} /><span>{it.label}</span></a></li>
+    ))}
+  </ul>
+</nav>
+
+<style>
+  .bar { position: fixed; left: 0; right: 0; bottom: 0; z-index: 45; background: var(--color-bg); border-top: var(--rule-w) solid var(--color-rule); padding-bottom: env(safe-area-inset-bottom, 0px); }
+  .bar__list { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); height: var(--bar-h); }
+  .bar__item { display: grid; justify-items: center; align-content: center; gap: 2px; height: 100%; font-size: 0.75rem; line-height: 1.1; color: var(--color-text-muted); text-decoration: none; transition: color var(--dur-mid) var(--ease-out), background-color var(--dur-mid) var(--ease-out); }
+  .bar__item:hover { color: var(--color-text); background: var(--color-bg-2); }
+  .bar__item:active { background: var(--color-bg-2); }
+  .bar__item:focus-visible { outline-offset: -3px; }
+  .bar__item--call { color: var(--color-brand-ink); font-weight: 700; }
+  @media (min-width: 1024px) { .bar { display: none; } }
+</style>

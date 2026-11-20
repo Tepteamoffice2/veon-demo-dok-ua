@@ -1,0 +1,42 @@
+---
+// Light, calm footer: logo → #top, anchors of the page, future pages as FutureLink, years (socials live in the contacts block right above).
+import Logo from "./Logo.astro";
+import FutureLink from "./FutureLink.astro";
+import { anchors } from "../data/site";
+const company = ["Про компанію", "Статті та огляди", "Бренди", "Питання й відповіді", "Вакансії"];
+const legal = ["Політика конфіденційності", "Угода користувача"];
+---
+<footer class="ft" data-rec="R-012">
+  <div class="container ft__grid">
+    <div class="ft__brand">
+      <Logo />
+    </div>
+    <nav class="ft__nav" aria-label="Розділи головної в підвалі">
+      <ul>{anchors.map((a) => <li><a href={a.href}>{a.label}</a></li>)}</ul>
+    </nav>
+    <div class="ft__nav">
+      <ul>{company.map((c) => <li><FutureLink up>{c}</FutureLink></li>)}</ul>
+    </div>
+  </div>
+  <div class="container ft__base">
+    <p>© 2011–2026 dok.ua</p>
+    <ul class="ft__legal">{legal.map((l) => <li><FutureLink up>{l}</FutureLink></li>)}</ul>
+  </div>
+</footer>
+
+<style>
+  .ft { background: var(--color-bg-2); padding-block: var(--s-7) var(--s-5); font-size: var(--fs-small); }
+  .ft__grid { display: grid; gap: var(--s-5); grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .ft__brand { grid-column: 1 / -1; }
+  .ft__nav ul { display: grid; }
+  .ft__nav a, .ft__nav :global(.future-link) { display: inline-flex; align-items: center; min-height: 40px; color: var(--color-text); text-decoration: none; }
+  .ft__nav :global(.future-link) { color: var(--color-text-muted); }
+  .ft__nav a:hover { color: var(--color-brand-ink); text-decoration: underline; text-underline-offset: .2em; }
+  .ft__base { display: flex; flex-wrap: wrap; justify-content: space-between; gap: var(--s-3) var(--s-5); margin-top: var(--s-6); padding-top: var(--s-4); border-top: var(--rule-w) solid var(--color-rule); color: var(--color-text-muted); }
+  .ft__legal { display: flex; flex-wrap: wrap; gap: var(--s-1) var(--s-5); }
+  .ft__legal :global(.future-link) { min-height: 32px; }
+  @media (min-width: 1024px) {
+    .ft__grid { grid-template-columns: 2fr 1fr 1fr; }
+    .ft__brand { grid-column: auto; }
+  }
+</style>

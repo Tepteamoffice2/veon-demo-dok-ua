@@ -1,0 +1,65 @@
+---
+// «Отримати» / «Оплатити» + маленька справжня таблиця порогів безкоштовної доставки. Facts: products_services[9–10].
+---
+<section id="delivery" class="section dl" data-rec="R-004,R-011" aria-labelledby="dl-title">
+  <div class="container dl__grid">
+    <h2 id="dl-title" class="dl__title">Доставка по Україні й оплата частинами</h2>
+
+    <div class="dl__col">
+      <h3>Отримати</h3>
+      <ul class="dl__list">
+        <li>Перевізником на ваш вибір — по всій Україні</li>
+        <li>Власною кур’єрською доставкою dok.ua</li>
+      </ul>
+    </div>
+    <div class="dl__col">
+      <h3>Оплатити</h3>
+      <ul class="dl__list">
+        <li>Накладеним платежем — його ми й радимо</li>
+        <li>Частинами, з ПриватБанком</li>
+      </ul>
+    </div>
+
+    <div class="dl__table-wrap">
+      <table class="dl__table">
+        <caption>Безкоштовна доставка</caption>
+        <thead>
+          <tr><th scope="col">Служба</th><th scope="col">Безкоштовно від</th></tr>
+        </thead>
+        <tbody>
+          <tr><th scope="row">Meest ПОШТА</th><td class="mono">2 400 грн</td></tr>
+          <tr><th scope="row">Укрпошта</th><td class="mono">2 900 грн</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<style>
+  .dl { border-top: var(--rule-w) solid var(--color-rule); }
+  .dl__grid { display: grid; gap: var(--s-6); }
+  .dl__title { max-width: 18ch; }
+  .dl__col { display: grid; gap: var(--s-3); align-content: start; }
+  .dl__list { display: grid; }
+  .dl__list li { padding-block: var(--s-3); border-bottom: var(--rule-w) solid var(--color-rule); font-size: var(--fs-lead); }
+  .dl__list li:first-child { border-top: var(--rule-w) solid var(--color-text); }
+  .dl__table { width: 100%; border-collapse: collapse; }
+  .dl__table caption { text-align: left; font-family: var(--font-display); font-weight: 700; font-size: var(--fs-h3); padding-bottom: var(--s-3); }
+  .dl__table th, .dl__table td { text-align: left; padding: var(--s-3) var(--s-4) var(--s-3) 0; border-bottom: var(--rule-w) solid var(--color-rule); font-weight: 400; }
+  .dl__table thead th { font-size: var(--fs-small); color: var(--color-text-muted); border-bottom-color: var(--color-text); }
+  .dl__table tbody th { font-size: var(--fs-lead); }
+  .dl__table td { text-align: right; padding-right: 0; font-size: var(--fs-lead); white-space: nowrap; }
+  .dl__table thead th:last-child { text-align: right; padding-right: 0; }
+  @media (min-width: 768px) {
+    .dl__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: var(--s-6); }
+    .dl__title, .dl__table-wrap { grid-column: 1 / -1; }
+    .dl__table-wrap { max-width: 34rem; }
+  }
+  @media (min-width: 1024px) {
+    .dl__grid { grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gutter); row-gap: var(--s-6); }
+    .dl__title { grid-column: 1 / span 5; grid-row: 1; }
+    .dl__table-wrap { grid-column: 1 / span 5; grid-row: 2; align-self: end; max-width: none; }
+    .dl__col:nth-of-type(1) { grid-column: 7 / span 3; grid-row: 1 / span 2; }
+    .dl__col:nth-of-type(2) { grid-column: 10 / span 3; grid-row: 1 / span 2; }
+  }
+</style>

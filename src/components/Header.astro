@@ -1,0 +1,186 @@
+---
+// Two-row light header (1440): service row with anchors + phone + language, main row with logo, catalog, search, account icons.
+// Sticks as one row; once the hero is out of view the search gives way to the «Ваше авто» chip and the icons to the phone.
+// 390: logo · phone · menu; the chip appears as a strip under the row.
+import Logo from "./Logo.astro";
+import Icon from "./Icon.astro";
+import FutureLink from "./FutureLink.astro";
+import { anchors, phoneMain } from "../data/site";
+const tools = [
+  { icon: "garage", label: "Гараж" },
+  { icon: "heart", label: "Обране" },
+  { icon: "cart", label: "Кошик" },
+  { icon: "user", label: "Кабінет" },
+] as const;
+---
+<header class="masthead" data-masthead data-rec="R-006,R-010,R-014">
+  <div class="topbar">
+    <div class="container topbar__in">
+      <nav aria-label="Розділи головної">
+        <ul class="topbar__nav">
+          {anchors.map((a) => <li><a href={a.href}>{a.label}</a></li>)}
+        </ul>
+      </nav>
+      <div class="topbar__end">
+        <a class="topbar__phone" href={phoneMain.href}><Icon name="phone" size={18} /><span class="mono">{phoneMain.label}</span></a>
+        <div class="lang" aria-label="Мова сайту" role="group">
+          <span class="lang__item is-current" aria-current="true" lang="uk">UA</span>
+          <FutureLink class="lang__item" note="Російська версія — у повній версії сайту">RU</FutureLink>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="mainbar">
+    <div class="container mainbar__in">
+      <Logo />
+      <a class="btn btn--brand mainbar__catalog" href="#catalog"><Icon name="grid" size={20} />Каталог</a>
+
+      <div class="swap mainbar__mid">
+        <div class="swap__a mainbar__search" role="search">
+          <label class="visually-hidden" for="site-search">Пошук запчастин</label>
+          <input id="site-search" type="search" placeholder="Назва або артикул, наприклад: гальмівні колодки" autocomplete="off" />
+          <FutureLink as="button" class="mainbar__go" note="Пошук з’явиться в повній версії сайту"><Icon name="search" size={20} /><span class="visually-hidden">Знайти</span></FutureLink>
+        </div>
+        <div class="swap__b car-chip" data-car-chip>
+          <span class="car-chip__label">Ваше авто:</span>
+          <span class="car-chip__value mono" data-car-text data-empty="Додайте авто">Додайте авто</span>
+          <a class="car-chip__act" href="#hero" data-car-edit>Змінити</a>
+        </div>
+      </div>
+
+      <div class="swap mainbar__end">
+        <nav class="swap__a tools" aria-label="Особисте">
+          <ul>
+            {tools.map((t) => (
+              <li><FutureLink class="tool"><Icon name={t.icon} /><span class="tool__label">{t.label}</span></FutureLink></li>
+            ))}
+          </ul>
+        </nav>
+        <a class="swap__b mainbar__phone" href={phoneMain.href}><Icon name="phone" size={20} /><span class="mono">{phoneMain.label}</span></a>
+      </div>
+
+      <div class="mobile-actions">
+        <a class="icon-btn" href={phoneMain.href} aria-label={`Подзвонити ${phoneMain.label}`}><Icon name="phone" /></a>
+        <details class="menu" data-menu>
+          <summary class="icon-btn" aria-label="Меню"><Icon name="menu" class="menu__open" /><Icon name="close" class="menu__close" /></summary>
+          <div class="menu__panel">
+            <nav aria-label="Меню">
+              <ul class="menu__list">
+                <li><a href="#catalog">Каталог</a></li>
+                {anchors.map((a) => <li><a href={a.href}>{a.label}</a></li>)}
+              </ul>
+            </nav>
+            <div class="menu__foot">
+              <a class="btn btn--brand" href={phoneMain.href}><Icon name="phone" size={20} /><span class="mono">{phoneMain.label}</span></a>
+              <div class="lang" role="group" aria-label="Мова сайту">
+                <span class="lang__item is-current" aria-current="true" lang="uk">UA</span>
+                <FutureLink class="lang__item" up note="Російська версія — у повній версії сайту">RU</FutureLink>
+              </div>
+            </div>
+          </div>
+        </details>
+      </div>
+    </div>
+    <div class="chip-strip" data-car-chip aria-hidden="true">
+      <div class="container chip-strip__in">
+        <span class="car-chip__label">Ваше авто:</span>
+        <span class="car-chip__value mono" data-car-text data-empty="Додайте авто">Додайте авто</span>
+        <a class="car-chip__act" href="#hero" tabindex="-1" data-car-edit>Змінити</a>
+      </div>
+    </div>
+  </div>
+</header>
+
+<style>
+  .masthead { position: sticky; top: 0; z-index: 40; background: var(--color-bg); }
+  .topbar { display: none; }
+  .mainbar { position: relative; background: var(--color-bg); border-bottom: var(--rule-w) solid var(--color-rule); }
+  .mainbar__in { display: flex; align-items: center; justify-content: space-between; gap: var(--s-4); min-height: var(--header-h); }
+  .mainbar__catalog, .mainbar__mid, .mainbar__end { display: none; }
+
+  .icon-btn { display: inline-grid; place-items: center; width: var(--tap); height: var(--tap); border-radius: var(--radius); color: var(--color-text); text-decoration: none; cursor: pointer; transition: background-color var(--dur-mid) var(--ease-out); }
+  .icon-btn:hover { background: var(--color-bg-2); }
+  .mobile-actions { display: flex; gap: var(--s-1); }
+  .menu summary { list-style: none; }
+  .menu summary::-webkit-details-marker { display: none; }
+  .menu :global(.menu__close) { display: none; }
+  .menu[open] :global(.menu__close) { display: block; }
+  .menu[open] :global(.menu__open) { display: none; }
+  .menu:not([open]) .menu__panel { display: none; }
+  .menu__panel { position: fixed; left: 0; right: 0; top: var(--header-h); max-height: calc(100svh - var(--header-h) - var(--bar-h)); overflow-y: auto; background: var(--color-bg); border-bottom: var(--rule-w) solid var(--color-rule); padding: var(--s-2) var(--space) var(--s-5); display: grid; gap: var(--s-4); }
+  .menu__list a { display: flex; align-items: center; min-height: 48px; font-size: 1.125rem; font-weight: 700; text-decoration: none; border-bottom: var(--rule-w) solid var(--color-rule); }
+  .menu__list a:hover { color: var(--color-brand-ink); }
+  .menu__foot { display: flex; align-items: center; justify-content: space-between; gap: var(--s-4); flex-wrap: wrap; }
+
+  .lang { display: inline-flex; align-items: center; gap: var(--s-1); font-size: var(--fs-small); }
+  .lang__item, .lang :global(.lang__item) { display: inline-grid; place-items: center; min-width: var(--tap); min-height: 32px; padding: 0 var(--s-2); border-radius: var(--radius); color: var(--color-text-muted); }
+  .lang .is-current { color: var(--color-text); font-weight: 700; background: var(--color-bg-2); }
+
+  .car-chip__label { color: var(--color-text-muted); font-size: var(--fs-small); }
+  .car-chip__value { font-size: 1rem; }
+  .car-chip__act { color: var(--color-brand-ink); font-size: var(--fs-small); font-weight: 700; text-decoration: underline; text-underline-offset: .2em; }
+
+  .chip-strip { display: none; }
+  :global(.js) .chip-strip { display: block; position: absolute; left: 0; right: 0; top: 100%; background: var(--color-bg-2); border-bottom: var(--rule-w) solid var(--color-rule); opacity: 0; visibility: hidden; transition: opacity var(--dur-mid) var(--ease-out), visibility 0s linear var(--dur-mid); }
+  .chip-strip__in { display: flex; align-items: center; gap: var(--s-2); min-height: 40px; }
+  .chip-strip .car-chip__act { margin-left: auto; padding: var(--s-2) 0; }
+  .masthead.is-condensed .chip-strip { opacity: 1; visibility: visible; transition-delay: 0s; }
+
+  @media (min-width: 1024px) {
+    .masthead { top: calc(-1 * var(--topbar-h)); }
+    .topbar { display: block; background: var(--color-bg-2); font-size: var(--fs-small); }
+    .topbar__in { display: flex; align-items: center; justify-content: space-between; min-height: 40px; }
+    .topbar__nav { display: flex; gap: var(--s-1); }
+    .topbar__nav a { display: inline-flex; align-items: center; min-height: 40px; padding: 0 var(--s-3); text-decoration: none; color: var(--color-text); border-radius: var(--radius); transition: color var(--dur-mid) var(--ease-out); }
+    .topbar__nav li:first-child a { padding-left: 0; }
+    .topbar__nav a:hover { color: var(--color-brand-ink); text-decoration: underline; text-underline-offset: .25em; }
+    .topbar__end { display: flex; align-items: center; gap: var(--s-5); }
+    .topbar__phone { display: inline-flex; align-items: center; gap: var(--s-2); min-height: 40px; font-size: 0.9375rem; text-decoration: none; color: var(--color-text); }
+    .topbar__phone:hover { color: var(--color-brand-ink); }
+
+    .mobile-actions, .chip-strip, :global(.js) .chip-strip { display: none; }
+    .mainbar__in { gap: var(--s-5); }
+    .mainbar__catalog { display: inline-flex; min-height: 48px; }
+    .swap { display: grid; align-items: center; }
+    .swap > * { grid-area: 1 / 1; transition: opacity var(--dur-mid) var(--ease-out), transform var(--dur-mid) var(--ease-out), visibility 0s linear 0s; }
+    .masthead.is-condensed .swap__a { opacity: 0; visibility: hidden; transform: translateY(6px); transition-delay: 0s, 0s, var(--dur-mid); }
+    .masthead.is-condensed .swap__b { opacity: 1; visibility: visible; transform: none; transition-delay: 0s; }
+    .mainbar__mid { flex: 1 1 auto; min-width: 0; }
+    .mainbar__end { justify-items: end; }
+
+    .mainbar__search { display: flex; align-items: center; height: 48px; background: var(--color-surface); border: var(--edge-w) solid var(--color-field-edge); border-radius: var(--radius); }
+    .mainbar__search:focus-within { border-color: var(--color-brand-ink); box-shadow: 0 0 0 1px var(--color-brand-ink); }
+    .mainbar__search input { flex: 1; min-width: 0; height: 100%; border: 0; background: var(--color-clear); padding: 0 var(--s-4); font-size: 0.9375rem; }
+    .mainbar__search input::placeholder { color: var(--color-text-muted); }
+    .mainbar__search input:focus-visible { outline: none; }
+    .mainbar__search :global(.mainbar__go) { width: 48px; height: 44px; justify-content: center; border: 0; background: var(--color-clear); color: var(--color-text-muted); border-radius: var(--radius); }
+    .mainbar__search :global(.mainbar__go:hover) { color: var(--color-text); background: var(--color-bg-2); }
+
+    .car-chip { display: inline-flex; align-items: center; gap: var(--s-3); justify-self: start; min-height: 48px; padding: 0 var(--s-2) 0 var(--s-4); border-radius: var(--radius); background: var(--color-bg-2); }
+    .car-chip__act { display: inline-grid; place-items: center; min-height: 40px; padding: 0 var(--s-3); border-radius: var(--radius); }
+    .car-chip__act:hover { background: var(--color-surface); }
+
+    .tools ul { display: flex; gap: var(--s-1); }
+    .tools :global(.tool) { flex-direction: column; justify-content: center; gap: 2px; min-width: 64px; min-height: 52px; padding: var(--s-1) var(--s-2); border-radius: var(--radius); color: var(--color-text-muted); }
+    .tools :global(.tool:hover) { color: var(--color-text); background: var(--color-bg-2); }
+    .tool__label { font-size: 0.75rem; line-height: 1.1; }
+    .mainbar__phone { display: inline-flex; align-items: center; gap: var(--s-2); min-height: 48px; padding: 0 var(--s-4); font-size: 1.125rem; text-decoration: none; color: var(--color-brand-ink); border-radius: var(--radius); }
+    .mainbar__phone:hover { background: var(--color-bg-2); }
+  }
+  @media (max-width: 1023px) { .masthead.is-condensed .chip-strip { transition-property: opacity, visibility; } }
+</style>
+
+<script>
+  const head = document.querySelector<HTMLElement>("[data-masthead]");
+  const hero = document.getElementById("hero");
+  if (head && hero && "IntersectionObserver" in window) {
+    const io = new IntersectionObserver(([e]) => {
+      head.classList.toggle("is-condensed", !e.isIntersecting);
+    }, { rootMargin: "-80px 0px 0px 0px", threshold: 0 });
+    io.observe(hero);
+  }
+  const menu = document.querySelector<HTMLDetailsElement>("[data-menu]");
+  menu?.querySelectorAll("a").forEach((a) => a.addEventListener("click", () => { menu.open = false; }));
+  document.addEventListener("keydown", (e) => { if (e.key === "Escape" && menu?.open) { menu.open = false; menu.querySelector("summary")?.focus(); } });
+</script>

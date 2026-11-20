@@ -1,0 +1,52 @@
+---
+// Одне число крупно — 340 брендів офіційно; поруч — факти довіри списком <dl>. Facts: C-101, C-102, C-105, products_services[8].
+---
+<section id="guarantees" class="section gu" data-rec="R-004,R-011" aria-labelledby="gu-title">
+  <div class="container gu__grid">
+    <div class="gu__main">
+      <h2 id="gu-title" class="gu__title">
+        <span class="gu__figure" data-reveal>340</span>
+        <span class="gu__line">брендів офіційно, з сертифікатами</span>
+      </h2>
+      <p class="gu__note">Сертифікати дистриб’юторів — на сторінках товарів.</p>
+    </div>
+    <dl class="gu__facts">
+      <div class="gu__row">
+        <dt>З 2011 року</dt>
+        <dd>продаємо автозапчастини для іномарок, 15 років на ринку</dd>
+      </div>
+      <div class="gu__row">
+        <dt>57 брендів моторних олив</dt>
+        <dd>серед 340 офіційних брендів</dd>
+      </div>
+      <div class="gu__row">
+        <dt>До 365 днів</dt>
+        <dd>на повернення та обмін для більшості товарів</dd>
+      </div>
+      <div class="gu__row">
+        <dt>66 тис.+ клієнтів щомісяця</dt>
+        <dd>приватні водії, майстри СТО й автопарки</dd>
+      </div>
+    </dl>
+  </div>
+</section>
+
+<style>
+  .gu { background: var(--color-bg-2); }
+  .gu__grid { display: grid; gap: var(--s-6); }
+  .gu__main { display: grid; gap: var(--s-4); align-content: start; }
+  .gu__title { display: grid; gap: var(--s-2); }
+  .gu__figure { display: block; font-size: var(--fs-figure); line-height: .86; letter-spacing: -0.05em; color: var(--color-brand-ink); }
+  .gu__line { font-size: var(--fs-h2); max-width: 14ch; }
+  .gu__note { color: var(--color-text-muted); max-width: 24rem; }
+  .gu__facts { display: grid; border-top: var(--rule-w) solid var(--color-text); align-self: end; }
+  .gu__row { display: grid; gap: var(--s-1); padding-block: var(--s-4); border-bottom: var(--rule-w) solid var(--color-rule); }
+  .gu__row dt { font-family: var(--font-display); font-weight: 700; font-size: var(--fs-h3); line-height: 1.2; letter-spacing: -0.01em; }
+  .gu__row dd { color: var(--color-text-muted); }
+  @media (min-width: 1024px) {
+    .gu__grid { grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gutter); }
+    .gu__main { grid-column: 1 / span 6; }
+    .gu__facts { grid-column: 7 / span 6; }
+    .gu__row { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); column-gap: var(--s-5); align-items: baseline; padding-block: var(--s-5); }
+  }
+</style>

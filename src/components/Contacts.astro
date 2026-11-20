@@ -1,0 +1,58 @@
+---
+// Синє поле — рима з першим екраном: 0 800 330 707 — найбільший елемент сторінки; далі інші номери, пошта, адреса, соцмережі.
+import { address, email, phoneMain, phonesOther, socials } from "../data/site";
+---
+<section id="contacts" class="section ct on-brand" data-rec="R-012" aria-labelledby="ct-title">
+  <div class="container ct__grid">
+    <h2 id="ct-title" class="ct__title">
+      <span class="ct__lead">Підбір і замовлення за безкоштовною лінією</span>
+      <a class="ct__phone mono" href={phoneMain.href} data-reveal>{phoneMain.label}</a>
+    </h2>
+
+    <div class="ct__block">
+      <h3 class="ct__label">Інші номери</h3>
+      <ul class="ct__list">
+        {phonesOther.map((p) => <li><a class="ct__link mono" href={p.href}>{p.label}</a></li>)}
+      </ul>
+    </div>
+    <div class="ct__block">
+      <h3 class="ct__label">Пошта</h3>
+      <a class="ct__link" href={email.href}>{email.label}</a>
+    </div>
+    <div class="ct__block">
+      <h3 class="ct__label">Офіс</h3>
+      <address class="ct__addr">{address.label}</address>
+      <a class="ct__link ct__map" href={address.map} rel="noopener">Відкрити на Google Maps</a>
+    </div>
+    <div class="ct__block" data-rec="S-R012">
+      <h3 class="ct__label">Соцмережі</h3>
+      <ul class="ct__list">
+        {socials.map((s) => <li><a class="ct__link" href={s.href} rel="noopener">{s.name}</a></li>)}
+      </ul>
+    </div>
+  </div>
+</section>
+
+<style>
+  .ct__grid { display: grid; gap: var(--s-6) var(--s-5); grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .ct__title { grid-column: 1 / -1; display: grid; gap: var(--s-3); letter-spacing: 0; }
+  .ct__lead { font-size: var(--fs-h3); color: var(--color-on-brand-2); font-weight: 700; max-width: 26ch; }
+  .ct__phone { justify-self: start; font-size: var(--fs-phone); line-height: 1; font-weight: 500; letter-spacing: -0.03em; color: var(--color-on-brand); text-decoration: none; white-space: nowrap; border-radius: var(--radius); transition: color var(--dur-mid) var(--ease-out); }
+  .ct__phone:hover { text-decoration: underline; text-decoration-thickness: 3px; text-underline-offset: .12em; text-decoration-color: var(--color-accent); }
+  .ct__block { display: grid; gap: var(--s-2); align-content: start; padding-top: var(--s-3); border-top: var(--rule-w) solid var(--color-on-brand-2); min-width: 0; }
+  .ct__label { font-family: var(--font-body); font-size: var(--fs-small); font-weight: 400; color: var(--color-on-brand-2); letter-spacing: 0; }
+  .ct__list { display: grid; }
+  .ct__link { display: inline-flex; align-items: center; min-height: var(--tap); color: var(--color-on-brand); font-size: var(--fs-lead); text-decoration: underline; text-decoration-color: var(--color-on-brand-2); text-underline-offset: .2em; overflow-wrap: anywhere; border-radius: 2px; transition: text-decoration-color var(--dur-mid) var(--ease-out); }
+  .ct__link:hover { text-decoration-color: var(--color-accent); text-decoration-thickness: 2px; }
+  .ct__link.mono { white-space: nowrap; }
+  @media (max-width: 479px) { .ct__block { grid-column: 1 / -1; } }
+  .ct__addr { font-style: normal; font-size: var(--fs-lead); }
+  .ct__map { font-size: var(--fs-body); }
+  @media (min-width: 1024px) {
+    .ct__grid { grid-template-columns: repeat(4, minmax(0, 1fr)); column-gap: var(--gutter); row-gap: var(--s-7); }
+  }
+  @media (max-width: 1023px) {
+    .ct__block:nth-of-type(3), .ct__block:nth-of-type(4) { grid-column: 1 / -1; }
+    .ct__block:nth-of-type(4) .ct__list { display: flex; flex-wrap: wrap; column-gap: var(--s-5); }
+  }
+</style>

@@ -1,0 +1,82 @@
+/* Hallmark · shape: tool-first (the picker is the hero) · genre: modern-minimal · theme: custom · job: buy · idea: "Ваше авто — вісь сторінки: номер або VIN з першого екрана веде всю головну" · vibe: "точний, світлий, фірмово-синій, без сумнівів" · paper: #F5F7FA · surface: absolute (white number plate and fields, concept § 8.3) · accent: #FFC233 · display: Fixel Display · body: Fixel Text · hero: синє поле з H1 і приладом підбору (поле держномера, VIN 17 клітинок) та дзвінком експерту · nav: two-row light header → one-row sticky with car chip · footer: light, logo + anchors + future pages, socials only in contacts · imagery: none (type and inputs) · signature: чип «Ваше авто» в шапці · axes: light/grotesk-sans/chromatic-amber · posture: committed · contrast: pass · fold: pass · v2.0.0 */
+/* Hallmark · pre-emit critique: P4 H4 E4 S4 R4 V4 · weakest: imagery (no client photos in usable quality), carried by the plate and VIN fields, the 340 figure and the phone set large */
+/* Hallmark · waive 7b · --color-surface and --color-on-brand are #FFFFFF · concept.md § 8.3: white is the number plate and the input fields (a real plate is white) and the only text colour on the brand blue that passes AA (5.27:1); a tinted white drops below AA on #1A6DBF */
+/* Hallmark · waive 39b · input.plate__input 92px on 1024+ · concept.md § 8.6: the plate field keeps the proportion of a Ukrainian number plate (≈ 4.6 : 1); it is the signature control, not a marketing button; the find button is 56px */
+/* Hallmark · waive 78 · h2 39px under a 76px H1 · concept.md § 8.4 fixes the scale 14/16/20/25/39/76 (≈ 1.25); the 340 figure and the contacts phone carry the large size below the hero */
+/* Hallmark · waive 44c · hero ends at 729px of 900 · independent review (design/review/review-notes.md) asked to tighten the empty blue top and bottom; the vin-expert heading at the fold signals the next step */
+/* Hallmark · waive 79 · 64px hero padding below the last row · same review: the right third now carries the facts, no filler copy is added to stretch the field */
+/* Hallmark · answer F25 · catalog parts on the phone open per group by tap (concept.md § 8.1 «раскрытие по касанию»); they work there and stay in the DOM */
+/* Hallmark · answer F4 · two filled recipes by surface, one per screen: amber on the blue fields (hero, contacts), brand blue on the light header (concept.md § 8.13 «Кнопки») */
+/* Client design tokens — only from design/concept.md (veon-concept: colors, fonts; § 8.3–8.5, 8.13). One token system for the whole site. */
+:root {
+  /* colour — roles from concept.md § 8.3 */
+  --color-bg: #F5F7FA;
+  --color-bg-2: #E9EEF5;
+  --color-surface: #FFFFFF;
+  --color-text: #121820;
+  --color-text-muted: #4F5B6B;
+  --color-brand: #1A6DBF;
+  --color-on-brand: #FFFFFF;
+  --color-on-brand-2: #EAF2FB;
+  --color-brand-ink: #0F4C8A;
+  --color-accent: #FFC233;
+  --color-accent-ink: #121820;
+  --color-rule: #D3DAE4;
+  --color-field-edge: #6E7A8C;
+  --color-danger: #B42318;
+  --color-success: #1E7B45;
+  --color-clear: transparent;
+
+  /* type — Fixel (MacPaw, OFL) + IBM Plex Mono (OFL), self-hosted */
+  --font-display: "Fixel Display", "Fixel Text", system-ui, sans-serif;
+  --font-body: "Fixel Text", system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "Cascadia Mono", Consolas, monospace;
+  --fs-small: 0.875rem;
+  --fs-body: 1rem;
+  --fs-lead: clamp(1.0625rem, 0.98rem + 0.35vw, 1.25rem);
+  --fs-h3: clamp(1.3125rem, 1.2rem + 0.45vw, 1.5625rem);
+  --fs-h2: clamp(1.75rem, 1.45rem + 1.25vw, 2.4375rem);
+  --fs-display: clamp(2.25rem, 1.35rem + 3.9vw, 4.75rem);
+  --fs-figure: clamp(5.5rem, 3rem + 10vw, 11rem);
+  --fs-phone: clamp(2.25rem, 0.9rem + 5.9vw, 7.5rem);
+  --fs-plate: clamp(1.375rem, 1.15rem + 0.9vw, 1.75rem);
+  --lh-tight: 1.04;
+  --lh-head: 1.12;
+  --lh-body: 1.55;
+
+  /* space — 4/8 rhythm, concept § 8.5 */
+  --s-1: 0.25rem;
+  --s-2: 0.5rem;
+  --s-3: 0.75rem;
+  --s-4: 1rem;
+  --s-5: 1.5rem;
+  --s-6: 2.5rem;
+  --s-7: 4rem;
+  --s-8: 6rem;
+  --s-9: 9rem;
+  --section-y: clamp(4rem, 3rem + 4vw, 7.5rem);
+  --gutter: clamp(0.75rem, 0.5rem + 1vw, 1.5rem);
+  --space: clamp(1rem, -0.9rem + 7.6vw, 5rem);
+  --container: 1280px;
+  --header-h: 56px;
+  --topbar-h: 0px;
+  --bar-h: 64px;
+
+  /* shape */
+  --radius: 8px;
+  --radius-plate: 6px;
+  --radius-card: 16px;
+  --rule-w: 1px;
+  --edge-w: 1.5px;
+  --focus-w: 3px;
+  --tap: 44px;
+
+  /* motion — concept § 8.8 */
+  --ease-out: cubic-bezier(.2, .7, .2, 1);
+  --dur-fast: 120ms;
+  --dur: 420ms;
+  --dur-mid: 220ms;
+}
+@media (min-width: 1024px) {
+  :root { --header-h: 64px; --topbar-h: 40px; }
+}

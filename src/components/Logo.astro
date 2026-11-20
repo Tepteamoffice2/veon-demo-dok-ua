@@ -1,0 +1,22 @@
+---
+// dok.ua wordmark set in type: «d», a blue gear in place of «o», «k.ua» (as the client's logo), slogan underneath.
+// The original logo file of the client replaces this in FULL.
+interface Props { slogan?: boolean; class?: string; }
+const { slogan = true, class: cls } = Astro.props;
+const teeth = Array.from({ length: 8 }, (_, i) => i * 45);
+---
+<a href="#top" class:list={["logo", cls]} aria-label="dok.ua — на початок сторінки">
+  <span class="logo__word" aria-hidden="true">d<svg class="logo__gear" viewBox="0 0 24 24" width="24" height="24" focusable="false">
+      <circle cx="12" cy="12" r="6.1" fill="none" stroke="currentColor" stroke-width="4.2" />
+      {teeth.map((deg) => <rect x="10.2" y="0.6" width="3.6" height="4.6" rx="0.8" fill="currentColor" transform={`rotate(${deg} 12 12)`} />)}
+    </svg>k.ua</span>
+  {slogan && <span class="logo__slogan" aria-hidden="true">автозапчастини без сумнівів</span>}
+</a>
+
+<style>
+  .logo { display: inline-grid; gap: 2px; text-decoration: none; color: var(--color-text); min-height: var(--tap); align-content: center; border-radius: var(--radius); }
+  .logo__word { display: inline-flex; align-items: baseline; font-family: var(--font-display); font-weight: 700; font-size: 1.75rem; line-height: 1; letter-spacing: -0.035em; }
+  .logo__gear { width: 0.66em; height: 0.66em; margin: 0 0.03em 0 0.04em; color: var(--color-brand); align-self: baseline; transform: translateY(0.02em); }
+  .logo__slogan { font-size: 0.6875rem; line-height: 1; color: var(--color-text-muted); letter-spacing: 0; }
+  @media (max-width: 380px) { .logo__word { font-size: 1.5rem; } .logo__slogan { display: none; } }
+</style>
